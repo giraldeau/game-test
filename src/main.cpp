@@ -1,5 +1,4 @@
 #include "systems/systems.hpp"
-#include <vector>
 
 struct State {
   std::vector<Entity> entities;
@@ -13,6 +12,7 @@ int draw(sf::RenderWindow, State);
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(600, 600), "Stick Duels V3");
+  
     State state;
 
     while (window.isOpen())
