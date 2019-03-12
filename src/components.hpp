@@ -16,6 +16,7 @@ struct Physics{
   sf::Vector2f acceleration;
 };
 
+
 struct Graphics{
   bool hidden;
   sf::Sprite sprite;
