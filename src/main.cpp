@@ -1,4 +1,5 @@
 #include "systems/systems.hpp"
+#include <iostream>
 
 struct State {
   std::vector<Entity> entities;
@@ -7,13 +8,12 @@ struct State {
   std::vector<Pos> positions;
 };
 
-int draw(sf::RenderWindow, State);
-
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(600, 600), "Stick Duels V3");
-  
+
     State state;
+    std::cout << state.graphics.size();
 
     while (window.isOpen())
     {
@@ -25,7 +25,7 @@ int main()
         }
 
         window.clear();
-        drawHandler(window, state.graphics);
+        //drawHandler(window, state.graphics);
         window.display();
     }
     return 0;
