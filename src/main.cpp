@@ -1,40 +1,19 @@
-#include <SFML/Graphics.hpp>
+#include "systems/systems.hpp"
 #include <vector>
 
-using namespace std;
-
-
-
-struct weapon {
-  int id;
+struct State {
+  std::vector<Entity> entities;
+  std::vector<Physics> physics;
+  std::vector<Graphics> graphics;
+  std::vector<Pos> positions;
 };
 
-struct physics{};
-struct platform{};
-struct entity{};
-
-struct player{
-  public:
-    int Hp;
-    physics Physics;
-    float x;
-    float y;
-    weapon currentWeapon;
-};
-
-struct state{
-  public:
-    vector<player> Players;
-    vector<entity> Entities;
-    vector<platform> Platforms;
-    vector<physics> Physics;
-};
-
-int draw(state);
+int draw(sf::RenderWindow, State);
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(600, 600), "Stick Duels");
+    State state;
 
     while (window.isOpen())
     {
@@ -46,13 +25,10 @@ int main()
         }
 
         window.clear();
-        //window.draw(shape);
+        drawHandler(window, state.graphics);
         window.display();
     }
-
     return 0;
 }
 
-int draw(state st) {
-  return 0;
-}
+// Drawing system
