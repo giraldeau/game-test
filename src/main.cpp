@@ -11,7 +11,8 @@ int draw(sf::RenderWindow, State);
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(600, 600), "Stick Duels v2");
+    sf::RenderWindow window(sf::VideoMode(600, 600), "Stick Duels V3");
+  
     State state;
 
     while (window.isOpen())
