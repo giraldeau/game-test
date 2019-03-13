@@ -5,13 +5,11 @@ struct State {
   std::vector<Entity> entities;
   std::vector<Physics> physics;
   std::vector<Graphics> graphics;
-  std::vector<Pos> positions;
 };
-
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(600, 600), "Stick Duels V3");
-
+    sf::Clock Clock;
     State state;
     std::cout << state.graphics.size();
 
@@ -23,7 +21,9 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
+      float time = Clock.GetElapsedTime();
+      Clock.Reset();
+      state.physics = handlePhysics(state.physiscs, time);
         window.clear();
         //drawHandler(window, state.graphics);
         window.display();
