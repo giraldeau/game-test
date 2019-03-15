@@ -2,26 +2,22 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-struct Entity{
-  int index;
-  int generation;
-};
+typedef sf::Vector2f Pos;
 
-typedef collision_type char;
-const collision_type STICKS = 0;
-const collision_type BOUNCES = 1;
-const collision_type VANISHES = 2;
-const collision_type EXPLODES = 3;
+enum Collision_t {
+  STICKS,
+  BOUNCES,
+  VANISHES,
+  EXPLODES
+};
 
 struct Physics{
   float mass;
   float friction;
-  collision_type collision;
+  Collision_t collision;
   sf::Vector2f velocity;
   sf::Vector2f acceleration;
-  sf::Vector2f pos;
 };
-
 
 struct Graphics{
   bool hidden;
