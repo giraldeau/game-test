@@ -13,9 +13,9 @@ int main()
     State state;
     // TESTING
     Physics physics;
-    sf::Vector2f acceleration(123, -10.2);
-    sf::Vector2f velocity(0, 0);
-    sf::Vector2f pos(4, -1.2);
+    sf::Vector2f acceleration(0, 400.1);
+    sf::Vector2f velocity(-150, -300);
+    sf::Vector2f pos(300, 300);
     physics.acceleration = acceleration;
     physics.velocity = velocity;
     Entity entity;
