@@ -1,12 +1,28 @@
 #include "systems/systems.hpp"
 #include <iostream>
 
+using namespace std;
+
+const unsigned int framerateLimit = 60;
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(600, 600), "Stick Duels V3");
+    window.setFramerateLimit(framerateLimit);
     sf::Clock Clock;
     State state;
+    // TESTING
+    Physics physics;
+    sf::Vector2f acceleration(123, -10.2);
+    sf::Vector2f velocity(0, 0);
+    sf::Vector2f pos(4, -1.2);
+    physics.acceleration = acceleration;
+    physics.velocity = velocity;
+    Entity entity;
+    entity.position = pos;
+    entity.physics = physics;
+    entity.hasPhysics = true;
+    state.registerEntity(entity);
 
     while (window.isOpen())
     {
@@ -17,12 +33,8 @@ int main()
                 window.close();
         }
       float time = Clock.restart().asSeconds();
-      state = physicsHandler(state, time);
-      window.clear();
-        //drawHandler(window, state.graphics);
-        window.display();
+      physicsHandler(state, time);
+      drawHandler(window, state);
     }
     return 0;
 }
-
-// Drawing system
