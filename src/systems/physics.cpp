@@ -1,6 +1,4 @@
 #include "systems.hpp"
-// TESTING
-#include <iostream>
 
 using namespace std;
 
