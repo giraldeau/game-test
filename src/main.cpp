@@ -13,8 +13,8 @@ int main()
     State state;
     // TESTING
     Physics physics;
-    sf::Vector2f acceleration(0, 400.1);
-    sf::Vector2f velocity(-150, -300);
+    sf::Vector2f acceleration(0, -40.1);
+    sf::Vector2f velocity(-10, 30);
     sf::Vector2f pos(300, 300);
     physics.acceleration = acceleration;
     physics.velocity = velocity;
