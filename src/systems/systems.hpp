@@ -1,3 +1,4 @@
+#pragma once
 #include "../components.hpp"
 using namespace std;
 
@@ -15,7 +16,7 @@ struct Entity{
   EntityIndex entityIndex;
   Physics physics;
   bool hasPhysics;
-  Graphics graphics;
+  Graphics* graphics;
   bool hasGraphics;
   Pos position;
   bool hasPosition;
@@ -24,8 +25,9 @@ struct Entity{
 
 class State{
   vector<EntityIndex> freeEntities;
-  int entityCount;
+  int entityCount = 0;
 public:
+   int frameCount = 0;
   vector<Entity> entities;
   EntityIndex registerEntity(Entity entity){
     EntityIndex entityIndex;
@@ -57,7 +59,7 @@ public:
 };
 
 // Draw system
-void drawHandler(sf::RenderWindow& window, State state);
+void drawHandler(State& state, sf::RenderWindow& window);
 
 // Physics system
 void physicsHandler(State& state, float time);
