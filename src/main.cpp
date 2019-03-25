@@ -11,7 +11,6 @@ int main()
     window.setFramerateLimit(framerateLimit);
     sf::Clock Clock;
     State state;
-    cout << state.frameCount << "dadwdi awd " << endl;
     // TESTING
     Physics physics;
     sf::Vector2f acceleration(0, -40.1);
