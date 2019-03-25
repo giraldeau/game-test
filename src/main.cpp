@@ -3,7 +3,7 @@
 
 using namespace std;
 
-const unsigned int framerateLimit = 60;
+const int framerateLimit = 20;
 
 int main()
 {
@@ -11,6 +11,7 @@ int main()
     window.setFramerateLimit(framerateLimit);
     sf::Clock Clock;
     State state;
+    cout << state.frameCount << "dadwdi awd " << endl;
     // TESTING
     Physics physics;
     sf::Vector2f acceleration(0, -40.1);
@@ -22,6 +23,23 @@ int main()
     entity.position = pos;
     entity.physics = physics;
     entity.hasPhysics = true;
+    entity.hasGraphics = true;
+    sf::Texture texture1;
+    sf::Texture texture2;
+    texture1.loadFromFile("resources/sprites/justin.png", sf::IntRect(10, 10, 1080, 1080));
+    texture2.loadFromFile("resources/sprites/kappa.png", sf::IntRect(10, 10, 1080, 1080));
+    sf::Sprite sprite1;
+    sf::Sprite sprite2;
+    sprite1.setTexture(texture1);
+    sprite2.setTexture(texture2);
+    sprite1.setScale(sf::Vector2f(0.4f, 0.4f));
+    sprite2.setScale(sf::Vector2f(0.1f, 0.1f));
+    vector<sf::Sprite> vec;
+    vec.push_back(sprite1);
+    vec.push_back(sprite2);
+    Animation animation(vec);
+    animation.frameRate = 4;
+    entity.graphics = &animation;
     state.registerEntity(entity);
 
     while (window.isOpen())
@@ -34,7 +52,7 @@ int main()
         }
       float time = Clock.restart().asSeconds();
       physicsHandler(state, time);
-      drawHandler(window, state);
+      drawHandler(state, window);
     }
     return 0;
 }
