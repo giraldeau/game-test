@@ -3,7 +3,6 @@
 
 void Animation::animateFrame(sf::RenderWindow& window,  int frameCount, sf::Vector2f position) {
   iterator->setPosition(position);
-  std::cout << frameCount << std::endl;
   window.draw(*iterator);
   if (frameCount % frameRate == 0) {
     iterator++;

@@ -29,7 +29,7 @@ struct Graphics{
   bool isAnimated;
   bool hidden = false;
   sf::Vector2f scale;
-  virtual void animateFrame(sf::RenderWindow& window,  int frameCount, sf::Vector2f position) {std::cout << "woopsie" << std::endl;};
+  virtual void animateFrame(sf::RenderWindow& window,  int frameCount, sf::Vector2f position) {};
   Graphics() {};
 };
 
