@@ -32,8 +32,8 @@ int main()
     sf::Sprite sprite2;
     sprite1.setTexture(texture1);
     sprite2.setTexture(texture2);
-    sprite1.setScale(sf::Vector2f(0.5f, 0.5f));
-    sprite2.setScale(sf::Vector2f(0.2f, 0.2f));
+    sprite1.setScale(sf::Vector2f(0.4f, 0.4f));
+    sprite2.setScale(sf::Vector2f(0.1f, 0.1f));
     vector<sf::Sprite> vec;
     vec.push_back(sprite1);
     vec.push_back(sprite2);
