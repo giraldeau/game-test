@@ -10,6 +10,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(600, 600), "Stick Duels V3");
     window.setFramerateLimit(framerateLimit);
     sf::Clock Clock;
+    sf::Clock animationClock;
     State state;
     // TESTING
     Physics physics;
@@ -37,7 +38,8 @@ int main()
     vec.push_back(sprite1);
     vec.push_back(sprite2);
     Animation animation(vec);
-    animation.frameRate = 4;
+    animation.frameRate = 1.0;
+    float frameRate = animation.frameRate;
     entity.graphics = &animation;
     state.registerEntity(entity);
 
@@ -50,8 +52,12 @@ int main()
                 window.close();
         }
       float time = Clock.restart().asSeconds();
+      float animationTime = animationClock.getElapsedTime().asSeconds();
+      if(animationTime > frameRate){
+        animationClock.restart();
+      }
       physicsHandler(state, time);
-      drawHandler(state, window);
+      drawHandler(state, window, animationTime);
     }
     return 0;
 }

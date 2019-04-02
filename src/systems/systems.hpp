@@ -27,7 +27,7 @@ class State{
   vector<EntityIndex> freeEntities;
   int entityCount = 0;
 public:
-   int frameCount = 0;
+  float animationTime = 0;
   vector<Entity> entities;
   EntityIndex registerEntity(Entity entity){
     EntityIndex entityIndex;
@@ -59,7 +59,7 @@ public:
 };
 
 // Draw system
-void drawHandler(State& state, sf::RenderWindow& window);
+void drawHandler(State& state, sf::RenderWindow& window, float animationTime);
 
 // Physics system
 void physicsHandler(State& state, float time);

@@ -1,10 +1,10 @@
 #include "systems.hpp"
 #include <iostream>
 
-void Animation::animateFrame(sf::RenderWindow& window,  int frameCount, sf::Vector2f position) {
+void Animation::animateFrame(sf::RenderWindow& window, float animationTime, sf::Vector2f position) {
   iterator->setPosition(position);
   window.draw(*iterator);
-  if (frameCount % frameRate == 0) {
+  if (animationTime > frameRate) {
     iterator++;
     if (iterator == frames.end()) {
       iterator = frames.begin();
@@ -23,14 +23,13 @@ Animation::Animation(vector<sf::Sprite> f) : Graphics () {
   iterator = frames.begin();
 };
 
-void drawHandler(State& state, sf::RenderWindow& window) {
+void drawHandler(State& state, sf::RenderWindow& window, float animationTime) {
   window.clear();
   for(vector<Entity>::iterator it = state.entities.begin(); it != state.entities.end(); ++it) {
     if (it->hasGraphics) {
-      if ((it->graphics)->isAnimated) (it->graphics)->animateFrame(window, state.frameCount, it->position);
+      if ((it->graphics)->isAnimated) (it->graphics)->animateFrame(window, state.animationTime, it->position);
     }
   }
-
   window.display();
-  state.frameCount++;
+  state.animationTime = animationTime;
 }
