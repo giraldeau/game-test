@@ -29,7 +29,7 @@ struct Graphics{
   bool isAnimated;
   bool hidden = false;
   sf::Vector2f scale;
-  virtual void animateFrame(sf::RenderWindow& window, float animationTime, sf::Vector2f position) {};
+  virtual void animateFrame(sf::RenderWindow& window, float time, sf::Vector2f position) {};
   Graphics() {};
 };
 
@@ -37,8 +37,9 @@ struct Graphics{
 struct Animation : public Graphics {
   std::vector<sf::Sprite> frames;
   std::vector<sf::Sprite>::iterator iterator;
-  void animateFrame(sf::RenderWindow& window, float animationTime, sf::Vector2f position);
-  float frameRate = 0;
+  void animateFrame(sf::RenderWindow& window, float time, sf::Vector2f position);
+  float frameTime = 0;
+  float currentTime = 0;
   Animation(std::vector<sf::Sprite>);
 };
 
@@ -47,4 +48,14 @@ struct Animation : public Graphics {
 struct Static : public Graphics {
   sf::Sprite sprite;
   Static();
+};
+
+struct Sound {
+sf::SoundBuffer buffer;
+sf::Sound sound;
+};
+
+struct Visual {
+  sf::Texture texture;
+  sf::Sprite sprite;
 };

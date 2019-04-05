@@ -1,34 +1,19 @@
 #pragma once
 #include "../components.hpp"
+#include <SFML/Audio.hpp>
 using namespace std;
 
 // State system
-struct EntityIndex{
-  int index;
-  int generation;
-};
-
-inline bool operator==(const EntityIndex& lhs, const EntityIndex& rhs) {
-    return ((lhs.index == rhs.index) && (lhs.generation == rhs.generation));
-}
-
-struct Entity{
-  EntityIndex entityIndex;
-  Physics physics;
-  bool hasPhysics;
-  Graphics* graphics;
-  bool hasGraphics;
-  Pos position;
-  bool hasPosition;
-};
-
+typedef unisgned int Entity;
 
 class State{
   vector<EntityIndex> freeEntities;
   int entityCount = 0;
 public:
-  float animationTime = 0;
-  vector<Entity> entities;
+  float time = 0;
+  // Component vectors
+
+  vector
   EntityIndex registerEntity(Entity entity){
     EntityIndex entityIndex;
     if (!freeEntities.empty()) {
@@ -59,7 +44,9 @@ public:
 };
 
 // Draw system
-void drawHandler(State& state, sf::RenderWindow& window, float animationTime);
+void drawHandler(State& state, sf::RenderWindow& window, float time);
 
 // Physics system
 void physicsHandler(State& state, float time);
+
+void soundHandler(State& state, sf::Keyboard Keyboard);
