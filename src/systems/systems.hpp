@@ -1,46 +1,28 @@
 #pragma once
 #include "../components.hpp"
-#include <SFML/Audio.hpp>
 using namespace std;
 
 // State system
-typedef unisgned int Entity;
+typedef unsigned int Entity;
+
+template <typename T>
+void addComponent(T* component, f_componentList,  EntityPointers);
 
 class State{
-  vector<EntityIndex> freeEntities;
-  int entityCount = 0;
+  vector<Physics> physicsComponents;
+  vector<Graphics> graphicsComponents;
+  vector<Collision> collisionComponents;
+  vector<Position> positionComponents;
 public:
+  State();
+  vector<EntityPointers> entityPointers;
   float time = 0;
-  // Component vectors
-
-  vector
-  EntityIndex registerEntity(Entity entity){
-    EntityIndex entityIndex;
-    if (!freeEntities.empty()) {
-      entityIndex = freeEntities.back();
-      freeEntities.pop_back();
-      entity.entityIndex = entityIndex;
-    } else {
-      entityIndex.index = entityCount++;
-      entityIndex.generation = 0;
-      entity.entityIndex = entityIndex;
-    }
-    entities.push_back(entity);
-    return entityIndex;
-  };
-
-  void freeEntity(EntityIndex entityIndex) {
-    for(vector<Entity>::iterator it = entities.begin(); it != entities.end(); ++it) {
-      if ((*it).entityIndex == entityIndex) {
-        EntityIndex entityIndex = (*it).entityIndex;
-        entityIndex.generation++;
-        freeEntities.push_back(entityIndex);
-        entities.erase(it);
-        return;
-      }
-    }
-  }
-
+  Entity registerEntity(EntityPointers);
+  void registerComponents(Entity entity, EntityPointers*);
+  bool hasComponents(Entity entity, f_componentList flags);
+  void removeComponents(Entity entity, f_componentList flags);
+  void removeEntity(Entity entity);
+  void freeMemory();
 };
 
 // Draw system
@@ -49,4 +31,8 @@ void drawHandler(State& state, sf::RenderWindow& window, float time);
 // Physics system
 void physicsHandler(State& state, float time);
 
+// Sound system
 void soundHandler(State& state, sf::Keyboard Keyboard);
+
+// Input system
+void inputHandler(State& state, sf::RenderWindow& window);

@@ -2,7 +2,7 @@
 #include "systems.hpp"
 #include <SFML/Audio.hpp>
 
-void soundHandler(State& state, sf::Keyboard Keyboard ) {
+void soundHandler(State& state) {
   for(vector<Entity>::iterator it = state.entities.begin(); it != state.entities.end(); ++it) {
     if(it->hasSound){
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){

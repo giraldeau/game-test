@@ -15,23 +15,21 @@ void Animation::animateFrame(sf::RenderWindow& window, float time, sf::Vector2f 
 };
 
 
-Static::Static() : Graphics () {
-  isAnimated = false;
-};
+Static::Static() : Graphics () {};
 
 Animation::Animation(vector<sf::Sprite> f) : Graphics () {
   frames = f;
-  isAnimated = true;
+  flags |= F_CANIMATED
   iterator = frames.begin();
 };
 
 void drawHandler(State& state, sf::RenderWindow& window, float time) {
   window.clear();
-  for(vector<Entity>::iterator it = state.entities.begin(); it != state.entities.end(); ++it) {
-    if (it->hasGraphics) {
-      if ((it->graphics)->isAnimated) (it->graphics)->animateFrame(window, state.time, it->position);
+  size_t index = 0;
+  for(vector<EntityPointers>::iterator it = state.entityPointers.begin(); it != state.entityPointers.end(); ++it) {
+    if (state.hasComponents(index++, F_GRAPHICS)) {
+      if (it->graphics->flags & F_CANIMATED) it->graphics->animateFrame(window, time, it->position);
     }
   }
   window.display();
-  state.time = time;
 }

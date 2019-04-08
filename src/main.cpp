@@ -1,6 +1,5 @@
 #include "systems/systems.hpp"
 #include <iostream>
-#include <SFML/Audio.hpp>
 
 using namespace std;
 
@@ -8,41 +7,31 @@ const int framerateLimit = 20;
 
 int main()
 {
+    State state;
     sf::RenderWindow window(sf::VideoMode(600, 600), "Stick Duels V3");
     window.setFramerateLimit(framerateLimit);
     sf::Clock Clock;
-    sf::Clock animationClock;
-    State state;
-    sf::Keyboard keyboard;
     // TESTING
+    EntityPointers entityptrs;
+    EntityPointers entityptrs2;
     Physics physics;
-    sf::Vector2f acceleration(0, 0);
-    sf::Vector2f velocity(0, 0);
-    sf::Vector2f pos(200, 200);
-    physics.acceleration = acceleration;
-    physics.velocity = velocity;
-    Entity entity;
-    entity.position = pos;
-    entity.physics = physics;
-    entity.hasPhysics = true;
-    entity.hasGraphics = true;
     Physics physics2;
+    sf::Vector2f acceleration(0, 0);
     sf::Vector2f acceleration2(0, 0);
+    sf::Vector2f velocity(0, 0);
     sf::Vector2f velocity2(50, 0);
+    sf::Vector2f pos(200, 200);
     sf::Vector2f pos2 = pos;
-    physics.acceleration = acceleration2;
-    physics.velocity = velocity2;
-    Entity entity2;
-    entity2.position = pos2;
-    entity2.physics = physics2;
-    entity2.hasPhysics = false;
-    entity2.hasGraphics = false;
+    physics.acceleration = acceleration;
+    physics2.acceleration = acceleration2;
+    physics.velocity = velocity;
+    physics2.velocity = velocity2;
+
+
     sf::SoundBuffer buffer;
     buffer.loadFromFile("resources/audio/REEE.wav");
     sf::Sound sound;
     sound.setBuffer(buffer);
-    entity.hasSound = true;
-    entity.sound = sound;
     sf::Texture texture1;
     sf::Texture texture2;
     //sf::Texture texture3;
@@ -67,61 +56,27 @@ int main()
     Animation animation2(vec2);
     animation.frameTime = .5;
     animation2.frameTime = 1;
-    entity.graphics = &animation;
-    entity2.graphics = &animation2;
-    state.registerEntity(entity);
-    state.registerEntity(entity2);
+
+    addComponent(&physics, F_PHYSICS, entityptrs);
+    addComponent(&pos, F_POSITION, entityptrs);
+    addComponent(&animation, F_GRAPHICS, entityptrs);
+
+    addComponent(&physics2, F_PHYSICS, entityptrs2);
+    addComponent(&pos2, F_POSITION, entityptrs2);
+    addComponent(&animation, F_GRAPHICS, entityptrs);
+
+    state.registerEntity(entityptrs);
+    state.registerEntity(entityptrs2);
+
+    // END TESTING
 
     while (window.isOpen())
     {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
       float time = Clock.restart().asSeconds();
-     if(state.entities[1].hasGraphics == false){
-       state.entities[1].position.x = state.entities[0].position.x + 100.0;
-       state.entities[1].position.y = state.entities[0].position.y;
-       state.entities[1].physics.acceleration.x = 0.0;
-     }
-     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-       state.entities[0].position.x += 20.0;
-       }
-     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-         state.entities[0].position.x += -20.0;
-         }
-     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-           state.entities[0].position.y += -20.0;
-         }
-     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-             state.entities[0].position.y += 20.0;
-             }
-     if (state.entities[0].position.y > 300) {
-        state.entities[0].physics.velocity.y = -state.entities[0].physics.velocity.y;
-     }
-     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-       state.entities[1].position.x += 20.0;
 
-       }
-     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-         state.entities[1].position.x += -20.0;
-         }
-     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-           state.entities[1].position.y += -20.0;
-         }
-     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-             state.entities[1].position.y += 20.0;
-             }
-     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-             state.entities[1].hasPhysics = true;
-             state.entities[1].hasGraphics = true;
-             }
+      inputHandler(state, window);
       physicsHandler(state, time);
       drawHandler(state, window, time);
-      soundHandler(state, keyboard);
-      handleInput(state, keyboard);
     }
     return 0;
 }
